@@ -247,7 +247,7 @@ class Operation extends Record(DEFAULTS) {
       if (key == 'node' && type != 'insert_node') continue
 
       if (key == 'mark' || key == 'marks' || key == 'node') {
-        value = value.toJSON()
+        value = value.toJSON(options)
       }
 
       if (key == 'properties' && type == 'merge_node') {
@@ -281,7 +281,7 @@ class Operation extends Record(DEFAULTS) {
         if ('isBackward' in value) v.isBackward = value.isBackward
         if ('isFocused' in value) v.isFocused = value.isFocused
         if ('marks' in value)
-          v.marks = value.marks == null ? null : value.marks.toJSON()
+          v.marks = value.marks == null ? null : value.marks.toJSON(options)
         value = v
       }
 
@@ -289,7 +289,7 @@ class Operation extends Record(DEFAULTS) {
         const v = {}
         if ('data' in value) v.data = value.data.toJS()
         if ('decorations' in value) v.decorations = value.decorations.toJS()
-        if ('schema' in value) v.schema = value.schema.toJS()
+        if ('schema' in value) v.schema = value.schema.toJSON(options)
         value = v
       }
 

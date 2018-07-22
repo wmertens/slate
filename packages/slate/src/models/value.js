@@ -25,6 +25,8 @@ const DEFAULTS = {
   selection: Range.create(),
 }
 
+let cache
+
 /**
  * Value.
  *
@@ -636,31 +638,34 @@ class Value extends Record(DEFAULTS) {
    */
 
   toJSON(options = {}) {
-    const object = {
+    let object = options.process ? options.process(this, options) : undefined
+    if (object !== undefined) return object
+
+    object = {
       object: this.object,
       document: this.document.toJSON(options),
     }
 
     if (options.preserveData) {
-      object.data = this.data.toJSON()
+      object.data = this.data.toJS()
     }
 
     if (options.preserveDecorations) {
       object.decorations = this.decorations
-        ? this.decorations.toArray().map(d => d.toJSON())
+        ? this.decorations.toArray().map(d => d.toJSON(options))
         : null
     }
 
     if (options.preserveHistory) {
-      object.history = this.history.toJSON()
+      object.history = this.history.toJSON(options)
     }
 
     if (options.preserveSelection) {
-      object.selection = this.selection.toJSON()
+      object.selection = this.selection.toJSON(options)
     }
 
     if (options.preserveSchema) {
-      object.schema = this.schema.toJSON()
+      object.schema = this.schema.toJSON(options)
     }
 
     if (options.preserveSelection && !options.preserveKeys) {
@@ -697,6 +702,10 @@ class Value extends Record(DEFAULTS) {
       })
     }
 
+    if (options.transform) {
+      const result = options.transform(object, options)
+      if (result !== undefined) object = result
+    }
     return object
   }
 

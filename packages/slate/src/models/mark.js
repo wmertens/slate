@@ -183,7 +183,7 @@ class Mark extends Record(DEFAULTS) {
    * @return {Object}
    */
 
-  toJSON() {
+  toJSON(options = {}) {
     const object = {
       object: this.object,
       type: this.type,

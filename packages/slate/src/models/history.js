@@ -161,11 +161,11 @@ class History extends Record(DEFAULTS) {
    * @return {Object}
    */
 
-  toJSON() {
+  toJSON(options = {}) {
     const object = {
       object: this.object,
-      redos: this.redos.toJSON(),
-      undos: this.undos.toJSON(),
+      redos: this.redos.toJS(),
+      undos: this.undos.toJS(),
     }
 
     return object

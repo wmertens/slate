@@ -641,7 +641,7 @@ class Text extends Record(DEFAULTS) {
       object: this.object,
       leaves: this.getLeaves()
         .toArray()
-        .map(r => r.toJSON()),
+        .map(r => r.toJSON(options)),
     }
 
     if (options.preserveKeys) {

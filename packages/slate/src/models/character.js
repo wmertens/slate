@@ -141,11 +141,11 @@ class Character extends Record(DEFAULTS) {
    * @return {Object}
    */
 
-  toJSON() {
+  toJSON(options = {}) {
     const object = {
       object: this.object,
       text: this.text,
-      marks: this.marks.toArray().map(m => m.toJSON()),
+      marks: this.marks.toArray().map(m => m.toJSON(options)),
     }
 
     return object

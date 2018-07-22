@@ -522,7 +522,9 @@ class Range extends Record(DEFAULTS) {
       isBackward:
         key == focusKey
           ? offset > focusOffset
-          : key == anchorKey ? isBackward : null,
+          : key == anchorKey
+            ? isBackward
+            : null,
     })
   }
 
@@ -542,7 +544,9 @@ class Range extends Record(DEFAULTS) {
       isBackward:
         key == anchorKey
           ? anchorOffset > offset
-          : key == focusKey ? isBackward : null,
+          : key == focusKey
+            ? isBackward
+            : null,
     })
   }
 
@@ -777,7 +781,7 @@ class Range extends Record(DEFAULTS) {
    * @return {Object}
    */
 
-  toJSON() {
+  toJSON(options = {}) {
     const object = {
       object: this.object,
       anchorKey: this.anchorKey,
@@ -787,7 +791,9 @@ class Range extends Record(DEFAULTS) {
       isBackward: this.isBackward,
       isFocused: this.isFocused,
       marks:
-        this.marks == null ? null : this.marks.toArray().map(m => m.toJSON()),
+        this.marks == null
+          ? null
+          : this.marks.toArray().map(m => m.toJSON(options)),
       isAtomic: this.isAtomic,
     }
 
